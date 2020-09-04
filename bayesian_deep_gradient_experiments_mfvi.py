@@ -7,7 +7,6 @@ import time
 import numpy as np
 import pickle
 from torch.utils.data import DataLoader
-from copy import deepcopy
 from distutils.util import strtobool
 
 # torch imports
@@ -86,7 +85,7 @@ def main():
         operator = odl.tomo.RayTransform(space, geometry)
         opnorm = odl.power_method_opnorm(operator)
         forward_model.operator = odl_torch.OperatorModule( (1 / opnorm) * operator )
-        forward_model.adjoint = odl_torch.OperatorModule( (1 / opnorm) * operator.adjoint)
+        forward_model.adjoint = odl_torch.OperatorModule(operator.adjoint)
         pseudoinverse = odl.tomo.fbp_op(operator)
         pseudoinverse = odl_torch.OperatorModule( pseudoinverse * opnorm )
         forward_model.pseudoinverse = pseudoinverse

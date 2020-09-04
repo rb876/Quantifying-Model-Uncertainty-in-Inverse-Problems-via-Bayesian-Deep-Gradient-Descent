@@ -1,7 +1,6 @@
 import abc
 import torch
 import numpy as np
-import torchvision
 from torch.utils.data import TensorDataset
 from copy import deepcopy
 from PIL import Image, ImageFont, ImageDraw

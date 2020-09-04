@@ -1,5 +1,4 @@
 import os
-import sys
 import torch.nn.functional as F
 import numpy as np
 import torch
@@ -205,35 +204,3 @@ class TrainVisualiser:
         fig.savefig(self.filename + '.png', format='png', dpi=900)
         fig.savefig(self.filename + '.svg', format='svg', dpi=900)
         plt.close()
-
-'''
-    numpy - torch conversion
-'''
-
-def join2torch(*args):
-    return ([torch.from_numpy(np.stack(arg)) for arg in
-            args] if len(args)
-            > 1 else torch.from_numpy(np.stack(args[0])))
-
-def to_numpy(*args):
-    return ([arg.numpy() for arg in args] if len(args) > 1 else args[0].numpy())
-
-'''
-    GPU wrappers
-'''
-
-def set_gpu_mode(mode):
-    global _use_gpu
-    _use_gpu = mode
-    if mode:
-        import torch.backends.cudnn as cudnn
-        cudnn.benchmark = True
-
-def gpu_enabled():
-    return _use_gpu
-
-def to_gpu(*args):
-    if _use_gpu:
-        return[arg.cuda() for arg in args] if len(args) > 1 else args[0].cuda()
-    else:
-        return args if len(args) > 1 else args[0]

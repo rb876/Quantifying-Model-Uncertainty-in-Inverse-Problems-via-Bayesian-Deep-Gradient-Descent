@@ -1,3 +1,4 @@
+import os
 import torch
 import odl
 import time
@@ -82,7 +83,7 @@ class DatasetConstructor:
     def _get_train(self, num_reps=4e4, threads=4, test=False):
 
         phantom = torch.stack([torch.from_numpy(self.gen_train_samples._get_smpl()) for _ in range(num_reps)])
-        
+
         Y_, X_, initX_ = [], [], []
         from concurrent.futures import ThreadPoolExecutor
         def sinogram_wrapper(chunk):
@@ -107,6 +108,8 @@ class DatasetConstructor:
     def _save_data(self, data, path='./datasets/'):
         import pickle
         filename = path + self.dataset_name + '.p'
+        if not os.path.isdir(path):
+            os.makedirs(path)
         with open(filename, 'wb') as handle:
             pickle.dump(data, handle, protocol=pickle.HIGHEST_PROTOCOL)
         handle.close()
