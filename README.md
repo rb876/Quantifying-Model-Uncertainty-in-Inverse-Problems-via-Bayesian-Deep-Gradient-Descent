@@ -1,5 +1,4 @@
 # Bayesian Deep Gradient Descent
-================================
 
 This repository contains the code for the article "[Quantifying Model Uncertainty in Inverse Problems via Bayesian Deep Gradient Descent](https://arxiv.org/abs/2007.09971)".
 
